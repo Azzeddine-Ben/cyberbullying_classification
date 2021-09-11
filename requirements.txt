@@ -1,0 +1,6 @@
+textstat
+lexical-diversity
+vaderSentiment
+vaderSentiment
+transformers
+sentencepiece
