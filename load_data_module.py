@@ -7,7 +7,7 @@ Created on Wed Sep  8 16:22:20 2021
 
 import pickle
 
-path ='/content/drive/My Drive/'
+path ='/content/drive/My Drive'
 def load_data(dataset_name):
     pickle_in = open(path + '/X_train_' + dataset_name, 'rb' )
     X_train   = pickle.load(pickle_in)
