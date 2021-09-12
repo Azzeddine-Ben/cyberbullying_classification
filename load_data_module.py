@@ -7,44 +7,45 @@ Created on Wed Sep  8 16:22:20 2021
 
 import pickle
 
+path ='/content/drive/My Drive/'
 def load_data(dataset_name):
-    pickle_in = open(dataset_name + '/X_train_' + dataset_name, 'rb' )
+    pickle_in = open(path + '/X_train_' + dataset_name, 'rb' )
     X_train   = pickle.load(pickle_in)
     pickle_in.close()
     
-    pickle_in = open(dataset_name +'/X_test_' + dataset_name, 'rb')
+    pickle_in = open(path +'/X_test_' + dataset_name, 'rb')
     X_test    = pickle.load(pickle_in)
     pickle_in.close()
     
     return X_train, X_test
 
 def load_eda_data(dataset_name):
-    pickle_in = open(dataset_name +'/eda_X_train_' + dataset_name, 'rb' )
+    pickle_in = open(path +'/eda_X_train_' + dataset_name, 'rb' )
     X_train   = pickle.load(pickle_in)
     pickle_in.close()
     
-    pickle_in = open(dataset_name +'/eda_X_test_' + dataset_name, 'rb')
+    pickle_in = open(path +'/eda_X_test_' + dataset_name, 'rb')
     X_test    = pickle.load(pickle_in)
     pickle_in.close()
     return X_train, X_test
 
 def load_labels(dataset_name):
-    pickle_in = open(dataset_name +'/y_train_' + dataset_name, 'rb' )
+    pickle_in = open(path +'/y_train_' + dataset_name, 'rb' )
     y_train   = pickle.load(pickle_in)
     pickle_in.close()
     
-    pickle_in = open(dataset_name +'/y_test_' + dataset_name, 'rb')
+    pickle_in = open(path +'/y_test_' + dataset_name, 'rb')
     y_test    = pickle.load(pickle_in)
     pickle_in.close()
     
     return y_train, y_test
 
 def load_eda_labels(dataset_name):
-    pickle_in = open(dataset_name +'/eda_y_train_' + dataset_name, 'rb' )
+    pickle_in = open(path +'/eda_y_train_' + dataset_name, 'rb' )
     y_train   = pickle.load(pickle_in)
     pickle_in.close()
     
-    pickle_in = open(dataset_name+'/eda_y_test_' + dataset_name, 'rb')
+    pickle_in = open(path +'/eda_y_test_' + dataset_name, 'rb')
     y_test    = pickle.load(pickle_in)
     pickle_in.close()
     return y_train, y_test
@@ -118,11 +119,18 @@ def load_valid_features(dataset_name, eda):
     
 def load_test_features(dataset_name, eda):
     if eda == 'y':
+        _, X_test = load_eda_data(dataset_name)
+        _, y_test = load_eda_data(dataset_name)
         dataset_name = dataset_name + '_eda'
-    
-    pickle_in = open(dataset_name + '_features/test/X_test', 'rb')
-    X_test = pickle.load(pickle_in)
-    pickle_in.close()
+    else:
+        _, X_test = load_data(dataset_name)
+        _, y_test = load_data(dataset_name)
+        
+# =============================================================================
+#     pickle_in = open(dataset_name + '_features/test/X_test', 'rb')
+#     X_test = pickle.load(pickle_in)
+#     pickle_in.close()
+# =============================================================================
     
     pickle_in = open(dataset_name + '_features/test/X_test_stylometric', 'rb')
     X_test_stylometric = pickle.load(pickle_in)
@@ -144,9 +152,11 @@ def load_test_features(dataset_name, eda):
     X_test_sentiments = pickle.load(pickle_in)
     pickle_in.close()
       
-    pickle_in = open(dataset_name + '_features/test/y_test', 'rb')
-    y_test = pickle.load(pickle_in)
-    pickle_in.close()
+# =============================================================================
+#     pickle_in = open(dataset_name + '_features/test/y_test', 'rb')
+#     y_test = pickle.load(pickle_in)
+#     pickle_in.close()
+# =============================================================================
     
     return X_test, X_test_stylometric, X_test_readability, X_test_lexical, X_test_liwc, X_test_sentiments, y_test     
     
