@@ -99,9 +99,9 @@ if __name__ == '__main__':
     
     MAX_LEN = 40    
     ##### Preparing train and test data
-    X_train_ids, X_train_masks = hf_model_encode(X_train, MAX_LEN)
-    X_valid_ids, X_valid_masks = hf_model_encode(X_valid, MAX_LEN)
-    X_test_ids, X_test_masks   = hf_model_encode(X_test, MAX_LEN)
+    X_train_ids, X_train_masks = hf_model_encode(X_train, MAX_LEN, tokenizer)
+    X_valid_ids, X_valid_masks = hf_model_encode(X_valid, MAX_LEN, tokenizer)
+    X_test_ids, X_test_masks   = hf_model_encode(X_test, MAX_LEN, tokenizer)
     
     if clf_model == 'mcnn':
         model = clf_models.mcnn_model(hf_model)

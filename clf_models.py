@@ -27,11 +27,11 @@ def mcnn_model(bert_model):
   dense_sty = keras.layers.Dense(50)(stylometric_inputs)
   dense_sty = keras.layers.Activation('relu')(dense_sty)
 
-  lexical_inputs = keras.layers.Input(shape=(16,))
+  lexical_inputs = keras.layers.Input(shape=(17,))
   dense_lex = keras.layers.Dense(50)(lexical_inputs)
   dense_lex = keras.layers.Activation('relu')(dense_lex)
 
-  rdbt_inputs = keras.layers.Input(shape=(17,))
+  rdbt_inputs = keras.layers.Input(shape=(16,))
   dense_rdbt = keras.layers.Dense(50)(rdbt_inputs)
   dense_rdbt = keras.layers.Activation('relu')(dense_rdbt)
 
@@ -87,11 +87,11 @@ def blstm_mcnn_model(bert_model):
   dense_sty = keras.layers.Dense(50)(stylometric_inputs)
   dense_sty = keras.layers.Activation('relu')(dense_sty)
 
-  lexical_inputs = keras.layers.Input(shape=(16,))
+  lexical_inputs = keras.layers.Input(shape=(17,))
   dense_lex = keras.layers.Dense(50)(lexical_inputs)
   dense_lex = keras.layers.Activation('relu')(dense_lex)
 
-  rdbt_inputs = keras.layers.Input(shape=(17,))
+  rdbt_inputs = keras.layers.Input(shape=(16,))
   dense_rdbt = keras.layers.Dense(50)(rdbt_inputs)
   dense_rdbt = keras.layers.Activation('relu')(dense_rdbt)
 
