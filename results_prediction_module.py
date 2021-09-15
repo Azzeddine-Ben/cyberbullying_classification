@@ -61,7 +61,9 @@ def visualize_predictions(y_test, predictions, nn = False):
   return cm
 
 def visualize_report(y_test, predictions): 
-  print(classification_report(y_test, predictions))
+  clf_report = classification_report(y_test, predictions)
+  print(clf_report)
+  return clf_report
   
 def predict_and_visualize(classifier, X_test, y_test):
   predictions = make_predictions(classifier, X_test)
@@ -69,13 +71,14 @@ def predict_and_visualize(classifier, X_test, y_test):
   predictions = (predictions > 0.5)
   cm = confusion_matrix(y_test, predictions)
   fig = print_confusion_matrix(cm, ['0', '1'])
-  visualize_report(y_test, predictions)
+  clf_report = visualize_report(y_test, predictions)
+  return clf_report, fig
 # =============================================================================
 #   if return_recall == True:
 #     return MinorityClass_recall(y_test, predictions)
 # =============================================================================
 
-def print_learning_curves(history):
+def print_learning_curves(history, saving_folder_path):
   plt.plot(history.history['accuracy'])
   plt.plot(history.history['val_accuracy'])
   plt.title('model accuracy')
@@ -85,6 +88,7 @@ def print_learning_curves(history):
   plt.grid()
   # plt.xlim(12.5,15)
   plt.show()
+  plt.savefig(saving_folder_path + 'Train learning curves')
   # summarize history for loss
   plt.plot(history.history['loss'])
   plt.plot(history.history['val_loss'])
@@ -95,6 +99,7 @@ def print_learning_curves(history):
   plt.grid()
   # plt.xlim(5,8)
   plt.show()
+  plt.savefig(saving_folder_path + '/Validation learning curves')
 
 def print_learning_curves_(history):
   plt.plot(history.history['binary_accuracy'])

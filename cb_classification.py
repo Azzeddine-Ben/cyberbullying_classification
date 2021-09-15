@@ -6,10 +6,12 @@ Created on Wed Sep  8 16:14:36 2021
 """
 
 import numpy as np
+import pandas as pd
 import tensorflow as tf
 import random as python_random
 import warnings
 import argparse
+import os
 
 from transformers import BertTokenizer, RobertaTokenizer, DistilBertTokenizer
 from transformers import TFBertModel, TFRobertaModel, TFDistilBertModel
@@ -120,10 +122,33 @@ if __name__ == '__main__':
                           X_valid_liwc, X_valid_sentiments], y_valid)
         )
     
-    print_learning_curves(history)
-    predict_and_visualize(model, [X_test_ids, X_test_masks, X_test, X_test_stylometric, X_test_lexical, X_test_readability,
-                                  X_test_liwc, X_test_sentiments], y_test)
+    
+# =============================================================================
+#     Create a new directory with the model and dataset names
+#         - Contains the learning curves figures
+#         - The clssification report as a csv file 
+#         - The confusion matrix figure
+#         - The trained model
+#     
+# =============================================================================
 
+    if eda == 'y':
+        path = dataset_name + '_eda_' + nlp_model + '_' + clf_model
+    else:
+        path = dataset_name + '_' + nlp_model + '_' + clf_model
+        
+    os.mkdir(path)
+    print_learning_curves(history, path)
+    clf_report, confusion_matrix_fig = predict_and_visualize(model, [X_test_ids, X_test_masks, X_test, X_test_stylometric, X_test_lexical, X_test_readability,
+                                  X_test_liwc, X_test_sentiments], y_test)
+    
+    ### Saving the classification report as a CSV file
+    clf_report_df = pd.DataFrame(clf_report).transpose()
+    clf_report_df.to_csv(path + '/classification_report.csv') 
+    ### Saving the confusion matrix figure
+    confusion_matrix_fig.savefig(path + '/confusion_matrix')
+    ### Saving the model
+    model.save(path + 'saved_model')
 
 
 
