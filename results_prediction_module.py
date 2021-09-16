@@ -88,8 +88,8 @@ def print_learning_curves(history, saving_folder_path):
   plt.legend(['train', 'test'], loc='upper left')
   plt.grid()
   # plt.xlim(12.5,15)
-  plt.show()
   plt.savefig(saving_folder_path + '/Train learning curves')
+  plt.show()
   # summarize history for loss
   plt.plot(history.history['loss'])
   plt.plot(history.history['val_loss'])
@@ -99,8 +99,9 @@ def print_learning_curves(history, saving_folder_path):
   plt.legend(['train', 'test'], loc='upper left')
   plt.grid()
   # plt.xlim(5,8)
-  plt.show()
   plt.savefig(saving_folder_path + '/Validation learning curves')
+  plt.show()
+  
 
 def print_learning_curves_(history):
   plt.plot(history.history['binary_accuracy'])
