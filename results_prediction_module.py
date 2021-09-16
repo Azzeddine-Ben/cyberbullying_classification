@@ -63,6 +63,7 @@ def visualize_predictions(y_test, predictions, nn = False):
 def visualize_report(y_test, predictions): 
   clf_report = classification_report(y_test, predictions)
   print(clf_report)
+  clf_report = classification_report(y_test, predictions, output_dict=True)
   return clf_report
   
 def predict_and_visualize(classifier, X_test, y_test):
@@ -88,7 +89,7 @@ def print_learning_curves(history, saving_folder_path):
   plt.grid()
   # plt.xlim(12.5,15)
   plt.show()
-  plt.savefig(saving_folder_path + 'Train learning curves')
+  plt.savefig(saving_folder_path + '/Train learning curves')
   # summarize history for loss
   plt.plot(history.history['loss'])
   plt.plot(history.history['val_loss'])
