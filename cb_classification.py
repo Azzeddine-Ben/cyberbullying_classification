@@ -20,6 +20,7 @@ from transformers import logging as hf_logging
 import load_data_module
 import clf_models
 from results_prediction_module import print_learning_curves, predict_and_visualize
+from lrcurve import KerasLearningCurve
 
 #### Inputs encoding function
 def hf_model_encode(data, maximum_length, tokenizer) :
@@ -119,7 +120,8 @@ if __name__ == '__main__':
         epochs=4, 
         batch_size=10, 
         validation_data=([X_valid_ids, X_valid_masks, X_valid, X_valid_stylometric, X_valid_lexical, X_valid_readability,
-                          X_valid_liwc, X_valid_sentiments], y_valid)
+                          X_valid_liwc, X_valid_sentiments], y_valid),
+        callbacks=[KerasLearningCurve]
         )
     
     
@@ -148,7 +150,7 @@ if __name__ == '__main__':
     ### Saving the confusion matrix figure
     confusion_matrix_fig.savefig(path + '/confusion_matrix')
     ### Saving the model
-    model.save(path + '/saved_model')
+    model.save_weights(path + '/saved_weights')
 
 
 
