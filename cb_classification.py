@@ -148,7 +148,7 @@ if __name__ == '__main__':
     ### Saving the confusion matrix figure
     confusion_matrix_fig.savefig(path + '/confusion_matrix')
     ### Saving the model
-    model.save(path + 'saved_model')
+    model.save(path + '/saved_model')
 
 
 
