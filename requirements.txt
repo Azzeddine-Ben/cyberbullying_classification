@@ -4,3 +4,4 @@ vaderSentiment
 vaderSentiment
 transformers
 sentencepiece
+lrcurve
