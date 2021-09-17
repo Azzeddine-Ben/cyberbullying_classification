@@ -120,8 +120,7 @@ if __name__ == '__main__':
         epochs=4, 
         batch_size=10, 
         validation_data=([X_valid_ids, X_valid_masks, X_valid, X_valid_stylometric, X_valid_lexical, X_valid_readability,
-                          X_valid_liwc, X_valid_sentiments], y_valid),
-        callbacks=[KerasLearningCurve]
+                          X_valid_liwc, X_valid_sentiments], y_valid)
         )
     
     
