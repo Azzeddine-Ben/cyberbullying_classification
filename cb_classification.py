@@ -90,8 +90,8 @@ if __name__ == '__main__':
         #### Loading TF BERT model
         hf_model = TFBertModel.from_pretrained('bert-large-uncased')
     elif nlp_model == 'roberta':
-        tokenizer  = RobertaTokenizer.from_pretrained('roberta-large-uncased', do_lower_case=False)
-        hf_model = TFRobertaModel.from_pretrained('roberta-large-uncased')     
+        tokenizer  = RobertaTokenizer.from_pretrained('roberta-large', do_lower_case=False)
+        hf_model = TFRobertaModel.from_pretrained('roberta-large')     
     elif nlp_model == 'distilbert':
         tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased', do_lower_case=False)
         hf_model = TFDistilBertModel.from_pretrained('distilbert-base-uncased')   
