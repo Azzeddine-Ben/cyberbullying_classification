@@ -12,6 +12,8 @@ import random as python_random
 import warnings
 import argparse
 import os
+from tensorflow import keras
+import tensorflow_addons as tfa
 
 from transformers import BertTokenizer, RobertaTokenizer, DistilBertTokenizer
 from transformers import TFBertModel, TFRobertaModel, TFDistilBertModel
@@ -77,12 +79,18 @@ if __name__ == '__main__':
                            metavar='clf_model',
                            type=str,
                            help='Name of the classification model (MCNN/BLSTM-MCNN)')
+    my_parser.add_argument('cost_sensitive',
+                           metavar='cost_sensitive',
+                           type=str,
+                           help='Cost sensitive method (cw: class weights / focal: focal loss)'
+                           )
     
     args = my_parser.parse_args()
     dataset_name = args.dataset_name
     eda = args.eda_dataset
     nlp_model = args.nlp_model
     clf_model = args.clf_model
+    cs_method = args.cost_sensitive
     
     if nlp_model == 'bert':
         #### Loading tokenizer
@@ -112,6 +120,43 @@ if __name__ == '__main__':
         model = clf_models.blstm_mcnn_model(hf_model)
 
     model.summary()
+    
+    if eda == 'y':
+        model.compile(keras.optimizers.Adam(lr=6e-6), loss='binary_crossentropy', metrics=['accuracy'])
+        history = model.fit(
+            [X_train_ids, X_train_masks, X_train, X_train_stylometric, X_train_lexical, X_train_readability, 
+             X_train_liwc, X_train_sentiments], y_train, 
+            epochs=4, 
+            batch_size=10, 
+            validation_data=([X_valid_ids, X_valid_masks, X_valid, X_valid_stylometric, X_valid_lexical, X_valid_readability,
+                              X_valid_liwc, X_valid_sentiments], y_valid)
+            )
+        path = dataset_name + '_eda_' + nlp_model + '_' + clf_model
+        
+    elif eda == 'n' and cs_method == 'cw':
+        model.compile(keras.optimizers.Adam(lr=6e-6), loss='binary_crossentropy', metrics=['accuracy'])
+        history = model.fit(
+            [X_train_ids, X_train_masks, X_train, X_train_stylometric, X_train_lexical, X_train_readability, 
+             X_train_liwc, X_train_sentiments], y_train, 
+            epochs=4, 
+            batch_size=10, 
+            validation_data=([X_valid_ids, X_valid_masks, X_valid, X_valid_stylometric, X_valid_lexical, X_valid_readability,
+                              X_valid_liwc, X_valid_sentiments], y_valid),
+            class_weight=None
+            )
+        path = dataset_name + '_' + nlp_model + '_' + clf_model
+        
+    elif eda == 'n' and cs_method == 'focal':
+        model.compile(keras.optimizers.Adam(lr=6e-6), loss=tfa.losses.SigmoidFocalCrossEntropy(alpha=0.925, gamma=0.99), metrics=['accuracy'])
+        history = model.fit(
+            [X_train_ids, X_train_masks, X_train, X_train_stylometric, X_train_lexical, X_train_readability, 
+             X_train_liwc, X_train_sentiments], y_train, 
+            epochs=4, 
+            batch_size=10, 
+            validation_data=([X_valid_ids, X_valid_masks, X_valid, X_valid_stylometric, X_valid_lexical, X_valid_readability,
+                              X_valid_liwc, X_valid_sentiments], y_valid)
+            )        
+        path = dataset_name + '_' + nlp_model + '_' + clf_model
     
     ## Training 
     history = model.fit(

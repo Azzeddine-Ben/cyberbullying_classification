@@ -70,7 +70,7 @@ def mcnn_model(bert_model):
   model = keras.models.Model(inputs = [input_ids, attention_masks, use_inputs, stylometric_inputs, lexical_inputs,
                                        rdbt_inputs, liwc_inputs, sentiment_inputs],outputs = output)
   # model.compile(keras.optimizers.Adam(lr=6e-6), loss=tfa.losses.SigmoidFocalCrossEntropy(alpha=0.925, gamma=0.99), metrics=['accuracy'])
-  model.compile(keras.optimizers.Adam(lr=6e-6), loss='binary_crossentropy', metrics=['accuracy'])
+  # model.compile(keras.optimizers.Adam(lr=6e-6), loss='binary_crossentropy', metrics=['accuracy'])
   return model
 
 def blstm_mcnn_model(bert_model):
@@ -130,5 +130,5 @@ def blstm_mcnn_model(bert_model):
   model = keras.models.Model(inputs = [input_ids, attention_masks, use_inputs, stylometric_inputs, lexical_inputs,
                                        rdbt_inputs, liwc_inputs, sentiment_inputs],outputs = output)
   # model.compile(keras.optimizers.Adam(lr=6e-6), loss=tfa.losses.SigmoidFocalCrossEntropy(alpha=0.925, gamma=0.99), metrics=['accuracy'])
-  model.compile(keras.optimizers.Adam(lr=6e-6), loss='binary_crossentropy', metrics=['accuracy'])
+  # model.compile(keras.optimizers.Adam(lr=6e-6), loss='binary_crossentropy', metrics=['accuracy'])
   return model
