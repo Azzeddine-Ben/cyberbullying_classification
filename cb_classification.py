@@ -19,10 +19,10 @@ from transformers import BertTokenizer, RobertaTokenizer, DistilBertTokenizer
 from transformers import TFBertModel, TFRobertaModel, TFDistilBertModel
 from transformers import logging as hf_logging
 
+from sklearn.utils import class_weight
 import load_data_module
 import clf_models
 from results_prediction_module import print_learning_curves, predict_and_visualize
-from lrcurve import KerasLearningCurve
 
 #### Inputs encoding function
 def hf_model_encode(data, maximum_length, tokenizer) :
@@ -135,6 +135,9 @@ if __name__ == '__main__':
         
     elif eda == 'n' and cs_method == 'cw':
         model.compile(keras.optimizers.Adam(lr=6e-6), loss='binary_crossentropy', metrics=['accuracy'])
+        cw = class_weight.compute_class_weight('balanced',  [0, 1], y_train)
+        cw_dict = {0: cw[0], 1: cw[1]}
+        
         history = model.fit(
             [X_train_ids, X_train_masks, X_train, X_train_stylometric, X_train_lexical, X_train_readability, 
              X_train_liwc, X_train_sentiments], y_train, 
@@ -142,7 +145,7 @@ if __name__ == '__main__':
             batch_size=10, 
             validation_data=([X_valid_ids, X_valid_masks, X_valid, X_valid_stylometric, X_valid_lexical, X_valid_readability,
                               X_valid_liwc, X_valid_sentiments], y_valid),
-            class_weight=None
+            class_weight=cw_dict
             )
         path = dataset_name + '_' + nlp_model + '_' + clf_model
         
@@ -157,16 +160,6 @@ if __name__ == '__main__':
                               X_valid_liwc, X_valid_sentiments], y_valid)
             )        
         path = dataset_name + '_' + nlp_model + '_' + clf_model
-    
-    ## Training 
-    history = model.fit(
-        [X_train_ids, X_train_masks, X_train, X_train_stylometric, X_train_lexical, X_train_readability, 
-         X_train_liwc, X_train_sentiments], y_train, 
-        epochs=4, 
-        batch_size=10, 
-        validation_data=([X_valid_ids, X_valid_masks, X_valid, X_valid_stylometric, X_valid_lexical, X_valid_readability,
-                          X_valid_liwc, X_valid_sentiments], y_valid)
-        )
     
     
 # =============================================================================
