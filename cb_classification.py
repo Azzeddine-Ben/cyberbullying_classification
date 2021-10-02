@@ -184,8 +184,7 @@ if __name__ == '__main__':
         
     os.mkdir(path)
     print_learning_curves(history, path)
-    clf_report, confusion_matrix_fig = predict_and_visualize(model, [X_test_ids, X_test_masks, X_test, X_test_stylometric, X_test_lexical, X_test_readability,
-                                  X_test_liwc, X_test_sentiments], y_test)
+    clf_report, confusion_matrix_fig = predict_and_visualize(model, [X_test_ids, X_test_masks, X_test], y_test)
     
     ### Saving the classification report as a CSV file
     clf_report_df = pd.DataFrame(clf_report).transpose()
