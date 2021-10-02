@@ -370,18 +370,19 @@ if __name__ == '__main__':
     args = my_parser.parse_args()
     dataset_name = args.dataset_name
     eda_dataset = args.eda_dataset
+    path ='/content/drive/MyDrive/'
     
     if eda_dataset == 'y':
         X_train, X_test = load_data_module.load_eda_data(dataset_name)
         y_train, y_test = load_data_module.load_eda_labels(dataset_name)
-        liwc_train_dataset = pd.read_csv(dataset_name + '/liwc_eda_'+ dataset_name +'_train.csv')
-        liwc_test_dataset  = pd.read_csv(dataset_name + '/liwc_eda_'+ dataset_name +'_test.csv')
+        liwc_train_dataset = pd.read_csv(path + 'liwc_eda_'+ dataset_name +'_train.csv')
+        liwc_test_dataset  = pd.read_csv(path + 'liwc_eda_'+ dataset_name +'_test.csv')
         directory = dataset_name + '_eda_features'
     elif eda_dataset == 'n':
         X_train, X_test = load_data_module.load_data(dataset_name)
         y_train, y_test = load_data_module.load_labels(dataset_name)
-        liwc_train_dataset = pd.read_csv(dataset_name + '/liwc_' + dataset_name +'_train.csv')
-        liwc_test_dataset  = pd.read_csv(dataset_name + '/liwc_' + dataset_name +'_test.csv')
+        liwc_train_dataset = pd.read_csv(path + 'liwc_' + dataset_name +'_train.csv')
+        liwc_test_dataset  = pd.read_csv(path + 'liwc_' + dataset_name +'_test.csv')
         directory = dataset_name + '_features'
         
     liwc_train_data = liwc_train_dataset[liwc_train_dataset.columns[2:-16]].to_numpy()
