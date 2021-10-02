@@ -119,6 +119,8 @@ if __name__ == '__main__':
         model = clf_models.mcnn_model(hf_model)
     elif clf_model =='blstm_mcnn':
         model = clf_models.blstm_mcnn_model(hf_model)
+    elif clf_model =='mcnn_blstm':
+        model = clf_models.mcnn_blstm_model(hf_model)
 
     model.summary()
     
