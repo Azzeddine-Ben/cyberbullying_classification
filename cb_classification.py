@@ -82,7 +82,8 @@ if __name__ == '__main__':
     my_parser.add_argument('cost_sensitive',
                            metavar='cost_sensitive',
                            type=str,
-                           help='Cost sensitive method (cw: class weights / focal: focal loss)'
+                           help='Cost sensitive method (cw: class weights / focal: focal loss)',
+                           nargs='?'
                            )
     
     args = my_parser.parse_args()
@@ -125,12 +126,11 @@ if __name__ == '__main__':
         mchkp = keras.callbacks.ModelCheckpoint('./' + dataset_name + '_eda_' + nlp_model + '_' + clf_model + '.h5', monitor='val_loss', verbose=1, save_best_only=True, save_weights_only = True)
         model.compile(keras.optimizers.Adam(lr=6e-6), loss='binary_crossentropy', metrics=['accuracy'])
         history = model.fit(
-            [X_train_ids, X_train_masks, X_train, X_train_stylometric, X_train_lexical, X_train_readability, 
-             X_train_liwc, X_train_sentiments], y_train, 
+            [X_train_ids, X_train_masks, X_train], 
+            y_train, 
             epochs=4, 
             batch_size=10, 
-            validation_data=([X_valid_ids, X_valid_masks, X_valid, X_valid_stylometric, X_valid_lexical, X_valid_readability,
-                              X_valid_liwc, X_valid_sentiments], y_valid),
+            validation_data=([X_valid_ids, X_valid_masks, X_valid], y_valid),
             callbacks=[mchkp]
             )
         path = dataset_name + '_eda_' + nlp_model + '_' + clf_model
@@ -142,12 +142,11 @@ if __name__ == '__main__':
         cw_dict = {0: cw[0], 1: cw[1]}
         
         history = model.fit(
-            [X_train_ids, X_train_masks, X_train, X_train_stylometric, X_train_lexical, X_train_readability, 
-             X_train_liwc, X_train_sentiments], y_train, 
+            [X_train_ids, X_train_masks, X_train],
+            y_train, 
             epochs=4, 
             batch_size=10, 
-            validation_data=([X_valid_ids, X_valid_masks, X_valid, X_valid_stylometric, X_valid_lexical, X_valid_readability,
-                              X_valid_liwc, X_valid_sentiments], y_valid),
+            validation_data=([X_valid_ids, X_valid_masks, X_valid], y_valid),
             callbacks=[mchkp],
             class_weight=cw_dict
             )
@@ -157,12 +156,11 @@ if __name__ == '__main__':
         mchkp = keras.callbacks.ModelCheckpoint('./' + dataset_name + '_' + nlp_model + '_' + clf_model + '_focal_.h5', monitor='val_loss', verbose=1, save_best_only=True, save_weights_only = True)
         model.compile(keras.optimizers.Adam(lr=6e-6), loss=tfa.losses.SigmoidFocalCrossEntropy(alpha=0.925, gamma=0.99), metrics=['accuracy'])
         history = model.fit(
-            [X_train_ids, X_train_masks, X_train, X_train_stylometric, X_train_lexical, X_train_readability, 
-             X_train_liwc, X_train_sentiments], y_train, 
+            [X_train_ids, X_train_masks, X_train],
+            y_train, 
             epochs=4, 
             batch_size=10, 
-            validation_data=([X_valid_ids, X_valid_masks, X_valid, X_valid_stylometric, X_valid_lexical, X_valid_readability,
-                              X_valid_liwc, X_valid_sentiments], y_valid),
+            validation_data=([X_valid_ids, X_valid_masks, X_valid], y_valid),
             callbacks=[mchkp]
             )        
         path = dataset_name + '_' + nlp_model + '_' + clf_model + '_focal'
