@@ -125,7 +125,8 @@ if __name__ == '__main__':
     model.summary()
     
     if eda == 'y':
-        mchkp = keras.callbacks.ModelCheckpoint('./' + dataset_name + '_eda_' + nlp_model + '_' + clf_model + '.h5', monitor='val_loss', verbose=1, save_best_only=True, save_weights_only = True)
+        chkp_path = './' + dataset_name + '_eda_' + nlp_model + '_' + clf_model + '.h5'
+        mchkp = keras.callbacks.ModelCheckpoint(chkp_path, monitor='val_loss', verbose=1, save_best_only=True, save_weights_only = True)
         model.compile(keras.optimizers.Adam(lr=6e-6), loss='binary_crossentropy', metrics=['accuracy'])
         history = model.fit(
             [X_train_ids, X_train_masks, X_train], 
@@ -138,7 +139,8 @@ if __name__ == '__main__':
         path = dataset_name + '_eda_' + nlp_model + '_' + clf_model
         
     elif eda == 'n' and cs_method == 'cw':
-        mchkp = keras.callbacks.ModelCheckpoint('./' + dataset_name + '_' + nlp_model + '_' + clf_model + '_cw.h5', monitor='val_loss', verbose=1, save_best_only=True, save_weights_only = True)
+        chkp_path = './' + dataset_name + '_' + nlp_model + '_' + clf_model + '_cw.h5'
+        mchkp = keras.callbacks.ModelCheckpoint(chkp_path, monitor='val_loss', verbose=1, save_best_only=True, save_weights_only = True)
         model.compile(keras.optimizers.Adam(lr=6e-6), loss='binary_crossentropy', metrics=['accuracy'])
         cw = class_weight.compute_class_weight('balanced',  [0, 1], y_train)
         cw_dict = {0: cw[0], 1: cw[1]}
@@ -155,7 +157,8 @@ if __name__ == '__main__':
         path = dataset_name + '_' + nlp_model + '_' + clf_model + '_cw'
         
     elif eda == 'n' and cs_method == 'focal':
-        mchkp = keras.callbacks.ModelCheckpoint('./' + dataset_name + '_' + nlp_model + '_' + clf_model + '_focal_.h5', monitor='val_loss', verbose=1, save_best_only=True, save_weights_only = True)
+        chkp_path = './' + dataset_name + '_' + nlp_model + '_' + clf_model + '_focal_.h5'
+        mchkp = keras.callbacks.ModelCheckpoint(chkp_path, monitor='val_loss', verbose=1, save_best_only=True, save_weights_only = True)
         model.compile(keras.optimizers.Adam(lr=6e-6), loss=tfa.losses.SigmoidFocalCrossEntropy(alpha=0.925, gamma=0.99), metrics=['accuracy'])
         history = model.fit(
             [X_train_ids, X_train_masks, X_train],
@@ -186,6 +189,7 @@ if __name__ == '__main__':
         
     os.mkdir(path)
     print_learning_curves(history, path)
+    model.load_weights(chkp_path)
     clf_report, confusion_matrix_fig = predict_and_visualize(model, [X_test_ids, X_test_masks, X_test], y_test)
     
     ### Saving the classification report as a CSV file

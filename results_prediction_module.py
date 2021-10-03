@@ -89,7 +89,7 @@ def print_learning_curves(history, saving_folder_path):
   plt.grid()
   # plt.xlim(12.5,15)
   plt.savefig(saving_folder_path + '/Train learning curves')
-  # plt.show()
+  plt.show()
   # summarize history for loss
   plt.plot(history.history['loss'])
   plt.plot(history.history['val_loss'])
