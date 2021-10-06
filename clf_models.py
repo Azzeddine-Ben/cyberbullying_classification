@@ -102,17 +102,17 @@ def mcnn_blstm_model(bert_model):
   output = bert_model([input_ids,attention_masks])
   output = output[0]
   
-  conv1 = keras.layers.Conv1D(32, 2, activation='relu')(output)
-  conv2 = keras.layers.Conv1D(32, 4, activation='relu')(output)
-  conv3 = keras.layers.Conv1D(32, 6, activation='relu')(output)
+  conv1 = keras.layers.Conv1D(32, 2, activation='relu', padding='same')(output)
+  conv2 = keras.layers.Conv1D(32, 4, activation='relu', padding='same')(output)
+  conv3 = keras.layers.Conv1D(32, 6, activation='relu', padding='same')(output)
 
   pool1 = keras.layers.MaxPooling1D()(conv1)
   pool2 = keras.layers.MaxPooling1D()(conv2)
   pool3 = keras.layers.MaxPooling1D()(conv3)
   
-  pool_concat = keras.layers.Concatenate([pool1, pool2, pool3])
+  pool_concat = keras.layers.Concatenate()([pool1, pool2, pool3])
   
-  bilstm = keras.layers.Bidirectional(keras.layers.LSTM(40, activation='relu', return_sequences=True))(pool_concat)
+  bilstm = keras.layers.Bidirectional(keras.layers.LSTM(40, activation='relu'))(pool_concat)
   concat = keras.layers.Concatenate()([bilstm, use_layer])
 
   dense = keras.layers.Dense(64,activation='relu')(concat)
