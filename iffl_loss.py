@@ -49,6 +49,7 @@ class if_focal_loss(LossFunctionWrapper):
     @typechecked
     def __init__(
         self,
+        class_weights: dict,
         from_logits: bool = False,
         alpha: FloatTensorLike = 0.25,
         gamma: FloatTensorLike = 2.0,
@@ -57,6 +58,7 @@ class if_focal_loss(LossFunctionWrapper):
     ):
         super().__init__(
             sigmoid_focal_crossentropy_1,
+            class_weights,
             name=name,
             reduction=reduction,
             from_logits=from_logits,
