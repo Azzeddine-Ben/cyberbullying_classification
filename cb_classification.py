@@ -20,8 +20,7 @@ from transformers import TFBertModel, TFRobertaModel, TFDistilBertModel
 from transformers import logging as hf_logging
 
 from sklearn.utils import class_weight
-import load_data_module
-import clf_models
+import load_data_module, clf_models, iffl_loss
 from results_prediction_module import print_learning_curves, predict_and_visualize
 
 #### Inputs encoding function
@@ -169,6 +168,23 @@ if __name__ == '__main__':
             callbacks=[mchkp]
             )        
         path = dataset_name + '_' + nlp_model + '_' + clf_model + '_focal'
+        
+    elif eda == 'n' and cs_method == 'iffl':
+        chkp_path = './' + dataset_name + '_' + nlp_model + '_' + clf_model + '_iffl.h5'
+        cw = class_weight.compute_class_weight('balanced',  [0, 1], y_train)
+        cw_dict = {0: cw[0], 1: cw[1]}
+        mchkp = keras.callbacks.ModelCheckpoint(chkp_path, monitor='val_loss', verbose=1, save_best_only=True, save_weights_only = True)
+        model.compile(keras.optimizers.Adam(lr=6e-6), loss= iffl_loss.if_focal_loss(alpha=0.65, gamma=0.55, class_weights=cw_dict), metrics=['accuracy'])
+         
+        history = model.fit(
+            [X_train_ids, X_train_masks, X_train],
+            y_train, 
+            epochs=4, 
+            batch_size=10, 
+            validation_data=([X_valid_ids, X_valid_masks, X_valid], y_valid),
+            callbacks=[mchkp]
+            )        
+        path = dataset_name + '_' + nlp_model + '_' + clf_model + '_iffl'        
     
     
 # =============================================================================
