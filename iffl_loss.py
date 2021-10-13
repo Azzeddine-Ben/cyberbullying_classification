@@ -49,32 +49,35 @@ class if_focal_loss(LossFunctionWrapper):
     @typechecked
     def __init__(
         self,
-        class_weights: dict,
         from_logits: bool = False,
         alpha: FloatTensorLike = 0.25,
         gamma: FloatTensorLike = 2.0,
+        cw_0: FloatTensorLike = 5,
+        cw_1: FloatTensorLike = 5,
         reduction: str = tf.keras.losses.Reduction.NONE,
         name: str = "sigmoid_focal_crossentropy_1",
     ):
         super().__init__(
             sigmoid_focal_crossentropy_1,
-            class_weights,
             name=name,
             reduction=reduction,
             from_logits=from_logits,
             alpha=alpha,
             gamma=gamma,
+            cw_0=cw_0,
+            cw_1=cw_1,
         )
 
 
 # @tf.keras.utils.register_keras_serializable(package="Addons")
 @tf.function
 def sigmoid_focal_crossentropy_1(
-    class_weights: dict,
     y_true: TensorLike,
     y_pred: TensorLike,
     alpha: FloatTensorLike = 0.25,
     gamma: FloatTensorLike = 2.0,
+    cw_0: FloatTensorLike = 5,
+    cw_1: FloatTensorLike = 5,
     from_logits: bool = False,
     
 ) -> tf.Tensor:
@@ -104,7 +107,7 @@ def sigmoid_focal_crossentropy_1(
 
     # Get the cross_entropy for each entry
     ce = K.binary_crossentropy(y_true, y_pred, from_logits=from_logits)
-    weight_vector = y_true * class_weights.get(1) + (1 - y_true) * class_weights.get(0)
+    weight_vector = y_true * cw_1 + (1 - y_true) * cw_0
     weighted_b_ce = weight_vector * ce
 
     # If logits are provided then convert the predictions into probabilities
