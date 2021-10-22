@@ -20,7 +20,7 @@ from transformers import TFBertModel, TFRobertaModel, TFDistilBertModel
 from transformers import logging as hf_logging
 
 from sklearn.utils import class_weight
-from sklearn.preprocessing import train_test_split
+from sklearn.model_selection import train_test_split
 import load_data_module, clf_models, iffl_loss
 from results_prediction_module import print_learning_curves, predict_and_visualize
 
@@ -114,7 +114,7 @@ if __name__ == '__main__':
     X_train, X_test = load_data_module.load_data(dataset_name)
     y_train, y_test = load_data_module.load_labels(dataset_name)
     
-    X_train, X_valid, y_train, y_valid = train_test_split(X_train, y_train, validation_split = 0.8)
+    X_train, X_valid, y_train, y_valid = train_test_split(X_train, y_train, test_size = 0.2)
     
     MAX_LEN = 40    
     ##### Preparing train and test data
