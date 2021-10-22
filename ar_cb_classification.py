@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Sep  8 16:14:36 2021
+Created on Fri Oct 22 14:03:07 2021
 
 @author: IT Doctor
 """
@@ -94,15 +94,15 @@ if __name__ == '__main__':
     
     if nlp_model == 'bert':
         #### Loading tokenizer
-        tokenizer = BertTokenizer.from_pretrained('bert-large-uncased', do_lower_case=False)
+        tokenizer = BertTokenizer.from_pretrained('bert-base-multilingual-uncased', do_lower_case=False)
         #### Loading TF BERT model
-        hf_model = TFBertModel.from_pretrained('bert-large-uncased')
+        hf_model = TFBertModel.from_pretrained('bert-base-multilingual-uncased')
     elif nlp_model == 'roberta':
-        tokenizer  = RobertaTokenizer.from_pretrained('roberta-large', do_lower_case=False)
-        hf_model = TFRobertaModel.from_pretrained('roberta-large')     
+        tokenizer  = RobertaTokenizer.from_pretrained('xlm-roberta-base', do_lower_case=False)
+        hf_model = TFRobertaModel.from_pretrained('xlm-roberta-base')     
     elif nlp_model == 'distilbert':
-        tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased', do_lower_case=False)
-        hf_model = TFDistilBertModel.from_pretrained('distilbert-base-uncased')   
+        tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-multilingual-uncased', do_lower_case=False)
+        hf_model = TFDistilBertModel.from_pretrained('distilbert-base-multilingual-uncased')   
         
     X_train, X_train_stylometric, X_train_readability, X_train_lexical, X_train_liwc, X_train_sentiments, y_train = load_data_module.load_train_features(dataset_name, eda)
     X_valid, X_valid_stylometric, X_valid_readability, X_valid_lexical, X_valid_liwc, X_valid_sentiments, y_valid = load_data_module.load_valid_features(dataset_name, eda)
