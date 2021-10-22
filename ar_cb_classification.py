@@ -20,6 +20,7 @@ from transformers import TFBertModel, TFRobertaModel, TFDistilBertModel
 from transformers import logging as hf_logging
 
 from sklearn.utils import class_weight
+from sklearn.preprocessing import train_test_split
 import load_data_module, clf_models, iffl_loss
 from results_prediction_module import print_learning_curves, predict_and_visualize
 
@@ -104,9 +105,16 @@ if __name__ == '__main__':
         tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-multilingual-uncased', do_lower_case=False)
         hf_model = TFDistilBertModel.from_pretrained('distilbert-base-multilingual-uncased')   
         
-    X_train, X_train_stylometric, X_train_readability, X_train_lexical, X_train_liwc, X_train_sentiments, y_train = load_data_module.load_train_features(dataset_name, eda)
-    X_valid, X_valid_stylometric, X_valid_readability, X_valid_lexical, X_valid_liwc, X_valid_sentiments, y_valid = load_data_module.load_valid_features(dataset_name, eda)
-    X_test, X_test_stylometric, X_test_readability, X_test_lexical, X_test_liwc, X_test_sentiments, y_test = load_data_module.load_test_features(dataset_name, eda)   
+# =============================================================================
+#     X_train, X_train_stylometric, X_train_readability, X_train_lexical, X_train_liwc, X_train_sentiments, y_train = load_data_module.load_train_features(dataset_name, eda)
+#     X_valid, X_valid_stylometric, X_valid_readability, X_valid_lexical, X_valid_liwc, X_valid_sentiments, y_valid = load_data_module.load_valid_features(dataset_name, eda)
+#     X_test, X_test_stylometric, X_test_readability, X_test_lexical, X_test_liwc, X_test_sentiments, y_test = load_data_module.load_test_features(dataset_name, eda)   
+# =============================================================================
+    
+    X_train, X_test = load_data_module.load_data(dataset_name)
+    y_train, y_test = load_data_module.load_labels(dataset_name)
+    
+    X_train, X_valid, y_train, y_valid = train_test_split(X_train, y_train, validation_split = 0.8)
     
     MAX_LEN = 40    
     ##### Preparing train and test data
