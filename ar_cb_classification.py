@@ -15,8 +15,8 @@ import os
 from tensorflow import keras
 import tensorflow_addons as tfa
 
-from transformers import BertTokenizer, RobertaTokenizer, DistilBertTokenizer
-from transformers import TFBertModel, TFRobertaModel, TFDistilBertModel
+from transformers import BertTokenizer, XLMRobertaTokenizer, DistilBertTokenizer
+from transformers import TFBertModel, TFXLMRobertaModel, TFDistilBertModel
 from transformers import logging as hf_logging
 
 from sklearn.utils import class_weight
@@ -99,8 +99,8 @@ if __name__ == '__main__':
         #### Loading TF BERT model
         hf_model = TFBertModel.from_pretrained('bert-base-multilingual-uncased')
     elif nlp_model == 'roberta':
-        tokenizer  = RobertaTokenizer.from_pretrained('xlm-roberta-base', do_lower_case=False)
-        hf_model = TFRobertaModel.from_pretrained('xlm-roberta-base')     
+        tokenizer  = XLMRobertaTokenizer.from_pretrained('jplu/tf-xlm-roberta-base', do_lower_case=False)
+        hf_model = TFXLMRobertaModel.from_pretrained('jplu/tf-xlm-roberta-base')     
     elif nlp_model == 'distilbert':
         tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-multilingual-uncased', do_lower_case=False)
         hf_model = TFDistilBertModel.from_pretrained('distilbert-base-multilingual-uncased')   
@@ -116,7 +116,7 @@ if __name__ == '__main__':
     
     X_train, X_valid, y_train, y_valid = train_test_split(X_train, y_train, test_size = 0.2)
     
-    MAX_LEN = 40    
+    MAX_LEN = 20    
     ##### Preparing train and test data
     X_train_ids, X_train_masks = hf_model_encode(X_train, MAX_LEN, tokenizer)
     X_valid_ids, X_valid_masks = hf_model_encode(X_valid, MAX_LEN, tokenizer)

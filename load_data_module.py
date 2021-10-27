@@ -160,6 +160,17 @@ def load_test_features(dataset_name, eda):
     
     return X_test, X_test_stylometric, X_test_readability, X_test_lexical, X_test_liwc, X_test_sentiments, y_test     
     
+
+def load_use_embeddings(dataset_name):
+    pickle_in = open(path + dataset_name + '_use_embeddings/X_train_use')
+    X_train_use = pickle.load(pickle_in)
+    pickle_in.close()
+    
+    pickle_in = open(path + dataset_name + 'use_embeddings/X_test_use')
+    X_test_use = pickle.load(pickle_in)
+    pickle_in.close()
+    
+    return X_train_use, X_test_use
     
     
     

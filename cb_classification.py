@@ -101,8 +101,8 @@ if __name__ == '__main__':
         tokenizer  = RobertaTokenizer.from_pretrained('roberta-large', do_lower_case=False)
         hf_model = TFRobertaModel.from_pretrained('roberta-large')     
     elif nlp_model == 'distilbert':
-        tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased', do_lower_case=False)
-        hf_model = TFDistilBertModel.from_pretrained('distilbert-base-uncased')   
+        tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-cased', do_lower_case=False)
+        hf_model = TFDistilBertModel.from_pretrained('distilbert-base-cased')   
         
     X_train, X_train_stylometric, X_train_readability, X_train_lexical, X_train_liwc, X_train_sentiments, y_train = load_data_module.load_train_features(dataset_name, eda)
     X_valid, X_valid_stylometric, X_valid_readability, X_valid_lexical, X_valid_liwc, X_valid_sentiments, y_valid = load_data_module.load_valid_features(dataset_name, eda)
