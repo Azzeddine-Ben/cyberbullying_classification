@@ -19,9 +19,7 @@ def mcnn_model_tpu(bert_model):
 
   input_ids          = keras.layers.Input(shape=(40,),dtype='int32')
   attention_masks    = keras.layers.Input(shape=(40,),dtype='int32')
-  use_inputs         = keras.layers.Input(shape=(), dtype=tf.string)
-
-  use_layer = keras.layers.Input(shape=(512,),dtype='int32')
+  use_inputs         = keras.layers.Input(shape=(512,),dtype='float32')
 
   output = bert_model([input_ids,attention_masks])
   output = output[0]
@@ -35,7 +33,7 @@ def mcnn_model_tpu(bert_model):
   pool3 = keras.layers.GlobalMaxPooling1D()(conv3)
 
 
-  concat = keras.layers.Concatenate()([pool1, pool2, pool3, use_layer])
+  concat = keras.layers.Concatenate()([pool1, pool2, pool3, use_inputs])
 
   dense = keras.layers.Dense(64,activation='relu')(concat)
   dense = keras.layers.Dropout(0.2)(dense)
@@ -55,9 +53,8 @@ def blstm_mcnn_model_tpu(bert_model):
 
   input_ids          = keras.layers.Input(shape=(40,),dtype='int32')
   attention_masks    = keras.layers.Input(shape=(40,),dtype='int32')
-  use_inputs         = keras.layers.Input(shape=(), dtype=tf.string)
+  use_inputs         = keras.layers.Input(shape=(512,),dtype='float32')
 
-  use_layer = keras.layers.Input(shape=(512,),dtype='int32')
 
   output = bert_model([input_ids,attention_masks])
   output = output[0]
@@ -70,7 +67,7 @@ def blstm_mcnn_model_tpu(bert_model):
   pool2 = keras.layers.GlobalMaxPooling1D()(conv2)
   pool3 = keras.layers.GlobalMaxPooling1D()(conv3)
 
-  concat = keras.layers.Concatenate()([pool1, pool2, pool3, use_layer])
+  concat = keras.layers.Concatenate()([pool1, pool2, pool3, use_inputs])
 
   dense = keras.layers.Dense(64,activation='relu')(concat)
   dense = keras.layers.Dropout(0.2)(dense)
@@ -78,7 +75,7 @@ def blstm_mcnn_model_tpu(bert_model):
 
   # loss_ = SigmoidFocalCrossEntropy_1(alpha=0.65, gamma=0.55)
 
-  model = keras.models.Model(inputs = [input_ids, attention_masks, use_inputs],outputs = output)
+  model = keras.models.Model(inputs = [input_ids, attention_masks, use_inputs], outputs = output)
   # model.compile(keras.optimizers.Adam(lr=6e-6), loss=tfa.losses.SigmoidFocalCrossEntropy(alpha=0.925, gamma=0.99), metrics=['accuracy'])
   # model.compile(keras.optimizers.Adam(lr=6e-6), loss='binary_crossentropy', metrics=['accuracy'])
   return model
@@ -91,10 +88,8 @@ def mcnn_blstm_model_tpu(bert_model):
 
   input_ids          = keras.layers.Input(shape=(40,),dtype='int32')
   attention_masks    = keras.layers.Input(shape=(40,),dtype='int32')
-  use_inputs         = keras.layers.Input(shape=(), dtype=tf.string)
-
-  use_layer = keras.layers.Input(shape=(512,),dtype='int32')
-
+  use_inputs         = keras.layers.Input(shape=(512,),dtype='float32')
+  
   output = bert_model([input_ids,attention_masks])
   output = output[0]
   
@@ -109,7 +104,7 @@ def mcnn_blstm_model_tpu(bert_model):
   pool_concat = keras.layers.Concatenate()([pool1, pool2, pool3])
   
   bilstm = keras.layers.Bidirectional(keras.layers.LSTM(40, activation='relu'))(pool_concat)
-  concat = keras.layers.Concatenate()([bilstm, use_layer])
+  concat = keras.layers.Concatenate()([bilstm, use_inputs])
 
   dense = keras.layers.Dense(64,activation='relu')(concat)
   dense = keras.layers.Dropout(0.2)(dense)
