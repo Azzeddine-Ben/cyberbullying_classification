@@ -142,11 +142,11 @@ if __name__ == '__main__':
         X_valid_ids, X_valid_masks = hf_model_encode(X_valid, MAX_LEN, tokenizer)
         X_test_ids, X_test_masks   = hf_model_encode(X_test, MAX_LEN, tokenizer)
      
-        if clf_model == 'mcnn_tpu':
+        if clf_model == 'mcnn':
             model = clf_tpu_models.mcnn_model_tpu(hf_model)
-        elif clf_model =='blstm_mcnn_tpu':
+        elif clf_model =='blstm_mcnn':
             model = clf_tpu_models.blstm_mcnn_model_tpu(hf_model)
-        elif clf_model =='mcnn_blstm_tpu':
+        elif clf_model =='mcnn_blstm':
             model = clf_tpu_models.mcnn_blstm_model_tpu(hf_model)
 
         model.compile(keras.optimizers.Adam(lr=6e-6), loss='binary_crossentropy', metrics=['accuracy'])
