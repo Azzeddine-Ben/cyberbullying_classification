@@ -12,6 +12,7 @@ import argparse
 import load_data_module
 import pickle
 import os
+import tensorflow_text
 
 ### Generate Arabic USE embeddings
 def generate_embeddings(dataset):

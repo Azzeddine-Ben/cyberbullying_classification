@@ -5,3 +5,4 @@ vaderSentiment
 transformers
 sentencepiece
 tensorflow-addons
+tensorflow_text

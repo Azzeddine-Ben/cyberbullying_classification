@@ -162,11 +162,11 @@ def load_test_features(dataset_name, eda):
     
 
 def load_use_embeddings(dataset_name):
-    pickle_in = open(path + dataset_name + '_use_embeddings/X_train_use')
+    pickle_in = open(path + dataset_name + '_use_embeddings/X_train_use', 'rb')
     X_train_use = pickle.load(pickle_in)
     pickle_in.close()
     
-    pickle_in = open(path + dataset_name + 'use_embeddings/X_test_use')
+    pickle_in = open(path + dataset_name + '_use_embeddings/X_test_use', 'rb')
     X_test_use = pickle.load(pickle_in)
     pickle_in.close()
     
