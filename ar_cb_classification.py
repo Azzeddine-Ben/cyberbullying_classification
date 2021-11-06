@@ -116,7 +116,7 @@ if __name__ == '__main__':
     
     X_train, X_valid, y_train, y_valid = train_test_split(X_train, y_train, test_size = 0.2)
     
-    MAX_LEN = 20    
+    MAX_LEN = 40    
     ##### Preparing train and test data
     X_train_ids, X_train_masks = hf_model_encode(X_train, MAX_LEN, tokenizer)
     X_valid_ids, X_valid_masks = hf_model_encode(X_valid, MAX_LEN, tokenizer)

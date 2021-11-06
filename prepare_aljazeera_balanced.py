@@ -153,7 +153,7 @@ dataset = dataset[dataset['post'] != ' ' ]
 print(dataset['label'].value_counts(normalize = True))
 
 post_length = np.array([len(post.split(" ")) for post in dataset.post])
-MAX_LEN = int(np.percentile(post_length, 95))
+MAX_LEN = 40
 print("Post lentgh at 95 percentile {}".format(MAX_LEN))
 
 
