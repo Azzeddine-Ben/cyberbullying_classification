@@ -180,13 +180,13 @@ path ='/content/drive/My Drive/'
 ### Saving files
 print('Saving Dataset Files ... \n')
          
-pickle.dump( X_train, open( path + "X_train" + dataset_name, "wb" ))
-pickle.dump( y_train, open( path + "y_train" + dataset_name, "wb" ))        
+pickle.dump( X_train, open( path + "X_train_" + dataset_name, "wb" ))
+pickle.dump( y_train, open( path + "y_train_" + dataset_name, "wb" ))        
 
-pickle.dump( X_valid, open( path + "X_valid" + dataset_name, "wb" ))
-pickle.dump( y_valid, open( path + "y_valid" + dataset_name, "wb" )) 
+pickle.dump( X_valid, open( path + "X_valid_" + dataset_name, "wb" ))
+pickle.dump( y_valid, open( path + "y_valid_" + dataset_name, "wb" )) 
 
-pickle.dump( X_test, open( path + "X_test" + dataset_name, "wb" ))
-pickle.dump( y_test, open( path + "y_test" + dataset_name, "wb" ))
+pickle.dump( X_test, open( path + "X_test_" + dataset_name, "wb" ))
+pickle.dump( y_test, open( path + "y_test_" + dataset_name, "wb" ))
        
 print("Terminated.")
