@@ -102,8 +102,8 @@ if __name__ == '__main__':
         tokenizer  = XLMRobertaTokenizer.from_pretrained('jplu/tf-xlm-roberta-base', do_lower_case=False)
         hf_model = TFXLMRobertaModel.from_pretrained('jplu/tf-xlm-roberta-base')     
     elif nlp_model == 'distilbert':
-        tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-multilingual-uncased', do_lower_case=False)
-        hf_model = TFDistilBertModel.from_pretrained('distilbert-base-multilingual-uncased')   
+        tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-multilingual-cased', do_lower_case=False)
+        hf_model = TFDistilBertModel.from_pretrained('distilbert-base-multilingual-cased')   
         
 # =============================================================================
 #     X_train, X_train_stylometric, X_train_readability, X_train_lexical, X_train_liwc, X_train_sentiments, y_train = load_data_module.load_train_features(dataset_name, eda)
