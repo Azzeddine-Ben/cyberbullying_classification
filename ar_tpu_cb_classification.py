@@ -131,6 +131,8 @@ if __name__ == '__main__':
         y_train, y_test = load_data_module.load_labels(dataset_name)
         X_train_use, X_test_use = load_data_module.load_use_embeddings(dataset_name)
         
+        X_train_use, X_test_use = np.asarray(X_train_use), np.asarray(X_test_use)
+        
         MAX_LEN = 40    
         
         ##### Split data
