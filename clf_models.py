@@ -132,7 +132,7 @@ def mcnn_blstm_model(bert_model):
 ######      Models with input features        ######
 ####################################################
 
-def mcnn_model(bert_model):
+def mcnn_model_with_features(bert_model):
   np.random.seed(123)
   python_random.seed(123)
   tf.random.set_seed(1234)
@@ -174,7 +174,7 @@ def mcnn_model(bert_model):
   # model.compile(keras.optimizers.Adam(lr=6e-6), loss='binary_crossentropy', metrics=['accuracy'])
   return model
 
-def blstm_mcnn_model(bert_model):
+def blstm_mcnn_model_with_features(bert_model):
   np.random.seed(123)
   python_random.seed(123)
   tf.random.set_seed(1234)
@@ -216,7 +216,7 @@ def blstm_mcnn_model(bert_model):
   return model
 
 
-def mcnn_blstm_model(bert_model):
+def mcnn_blstm_model_with_features(bert_model):
   np.random.seed(123)
   python_random.seed(123)
   tf.random.set_seed(1234)
