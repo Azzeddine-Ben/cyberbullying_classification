@@ -21,6 +21,7 @@ from transformers import TFBertModel, TFRobertaModel, TFDistilBertModel
 from transformers import logging as hf_logging
 
 from sklearn.utils import class_weight
+from sklearn.preprocessing import MinMaxScaler
 import load_data_module, clf_models, iffl_loss
 from results_prediction_module import print_learning_curves, predict_and_visualize
 
@@ -40,6 +41,14 @@ def hf_model_encode(data, maximum_length, tokenizer) :
       input_ids.append(encoded['input_ids'])
       attention_masks.append(encoded['attention_mask'])
   return np.array(input_ids), np.array(attention_masks)
+
+#### Features Scaling Function
+def FeaturesScaling(features):
+  minmax_scaler = MinMaxScaler()
+  minmax_scaler.fit(features)
+  scaled_features = minmax_scaler.transform(features)
+  return minmax_scaler, scaled_features 
+
 
 # The below is necessary for starting Numpy generated random numbers
 # in a well-defined initial state.
@@ -109,6 +118,32 @@ if __name__ == '__main__':
     X_valid, X_valid_stylometric, X_valid_readability, X_valid_lexical, X_valid_liwc, X_valid_sentiments, y_valid = load_data_module.load_valid_features(dataset_name, eda)
     X_test, X_test_stylometric, X_test_readability, X_test_lexical, X_test_liwc, X_test_sentiments, y_test = load_data_module.load_test_features(dataset_name, eda)   
     
+    #======================================================================
+    #================== Features Scaling ==================================
+    #======================================================================
+
+    stylometric_scaler, X_train_stylometric =  FeaturesScaling(X_train_stylometric)
+    X_test_stylometric = stylometric_scaler.transform(X_test_stylometric)
+    X_valid_stylometric = stylometric_scaler.transform(X_valid_stylometric)
+
+    stylometric_scaler, X_train_stylometric =  FeaturesScaling(X_train_stylometric)
+    X_test_stylometric = stylometric_scaler.transform(X_test_stylometric)
+    X_valid_stylometric = stylometric_scaler.transform(X_valid_stylometric)
+
+    stylometric_scaler, X_train_stylometric =  FeaturesScaling(X_train_stylometric)
+    X_test_stylometric = stylometric_scaler.transform(X_test_stylometric)
+    X_valid_stylometric = stylometric_scaler.transform(X_valid_stylometric)
+
+    stylometric_scaler, X_train_stylometric =  FeaturesScaling(X_train_stylometric)
+    X_test_stylometric = stylometric_scaler.transform(X_test_stylometric)
+    X_valid_stylometric = stylometric_scaler.transform(X_valid_stylometric)
+
+    stylometric_scaler, X_train_stylometric =  FeaturesScaling(X_train_stylometric)
+    X_test_stylometric = stylometric_scaler.transform(X_test_stylometric)
+    X_valid_stylometric = stylometric_scaler.transform(X_valid_stylometric)
+
+    #=======================================================================
+
     MAX_LEN = 40    
     ##### Preparing train and test data
     X_train_ids, X_train_masks = hf_model_encode(X_train, MAX_LEN, tokenizer)
