@@ -47,7 +47,7 @@ def FeaturesScaling(features):
   minmax_scaler = MinMaxScaler()
   minmax_scaler.fit(features)
   scaled_features = minmax_scaler.transform(features)
-  return minmax_scaler, scaled_features 
+  return minmax_scaler, scaled_features.astype(dtype='float32')  
 
 
 # The below is necessary for starting Numpy generated random numbers
@@ -126,21 +126,21 @@ if __name__ == '__main__':
     X_test_stylometric = stylometric_scaler.transform(X_test_stylometric)
     X_valid_stylometric = stylometric_scaler.transform(X_valid_stylometric)
 
-    stylometric_scaler, X_train_stylometric =  FeaturesScaling(X_train_stylometric)
-    X_test_stylometric = stylometric_scaler.transform(X_test_stylometric)
-    X_valid_stylometric = stylometric_scaler.transform(X_valid_stylometric)
+    readability_scaler, X_train_readability =  FeaturesScaling(X_train_readability)
+    X_test_readability = readability_scaler.transform(X_test_readability)
+    X_valid_readability = readability_scaler.transform(X_valid_readability)
 
-    stylometric_scaler, X_train_stylometric =  FeaturesScaling(X_train_stylometric)
-    X_test_stylometric = stylometric_scaler.transform(X_test_stylometric)
-    X_valid_stylometric = stylometric_scaler.transform(X_valid_stylometric)
+    lexical_scaler, X_train_lexical =  FeaturesScaling(X_train_lexical)
+    X_test_lexical = lexical_scaler.transform(X_test_lexical)
+    X_valid_lexical = lexical_scaler.transform(X_valid_lexical)
 
-    stylometric_scaler, X_train_stylometric =  FeaturesScaling(X_train_stylometric)
-    X_test_stylometric = stylometric_scaler.transform(X_test_stylometric)
-    X_valid_stylometric = stylometric_scaler.transform(X_valid_stylometric)
+    liwc_scaler, X_train_liwc =  FeaturesScaling(X_train_liwc)
+    X_test_liwc = liwc_scaler.transform(X_test_liwc)
+    X_valid_liwc = liwc_scaler.transform(X_valid_liwc)
 
-    stylometric_scaler, X_train_stylometric =  FeaturesScaling(X_train_stylometric)
-    X_test_stylometric = stylometric_scaler.transform(X_test_stylometric)
-    X_valid_stylometric = stylometric_scaler.transform(X_valid_stylometric)
+    sentiments_scaler, X_train_sentiments =  FeaturesScaling(X_train_sentiments)
+    X_test_sentiments = sentiments_scaler.transform(X_test_sentiments)
+    X_valid_sentiments = sentiments_scaler.transform(X_valid_sentiments)
 
     #=======================================================================
 
@@ -245,14 +245,3 @@ if __name__ == '__main__':
     confusion_matrix_fig.savefig(path + '/confusion_matrix')
     ### Saving the model
     model.save_weights(path + '/saved_weights')
-
-
-
-
-
-
-
-
-
-
-

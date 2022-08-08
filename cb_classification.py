@@ -120,13 +120,6 @@ if __name__ == '__main__':
         model = clf_models.blstm_mcnn_model(hf_model)
     elif clf_model =='mcnn_blstm':
         model = clf_models.mcnn_blstm_model(hf_model)
-    #### Added clf models along with input features
-    elif clf_model == 'mcnn_with_feature':
-        model = clf_models.mcnn_model(hf_model, X_train_lexical, X_train_readability, X_train_sentiments, X_train_stylometric)
-    elif clf_model == 'blstm_mcnn_with_features':
-        model = clf_models.blstm_mcnn_model(hf_model, X_train_lexical, X_train_readability, X_train_sentiments, X_train_stylometric)
-    elif clf_model == 'mcnn_blstm_with_features':
-        model = clf_models.mcnn_blstm_model(hf_model, X_train_lexical, X_train_readability, X_train_sentiments, X_train_stylometric)
 
     model.summary()
     

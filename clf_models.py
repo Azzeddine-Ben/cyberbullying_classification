@@ -141,10 +141,10 @@ def mcnn_model_with_features(bert_model):
   attention_masks    = keras.layers.Input(shape=(40,),dtype='int32')
   use_inputs         = keras.layers.Input(shape=(), dtype=tf.string)
 
-  input_lexical     = keras.layers.Input(shape=(17,),dtype='int32')
-  input_readability = keras.layers.Input(shape=(16,),dtype='int32')
-  input_sentiments  = keras.layers.Input(shape=(6,),dtype='int32')
-  input_stylometric = keras.layers.Input(shape=(4,),dtype='int32')
+  input_lexical     = keras.layers.Input(shape=(17,),dtype='float32')
+  input_readability = keras.layers.Input(shape=(16,),dtype='float32')
+  input_sentiments  = keras.layers.Input(shape=(6,),dtype='float32')
+  input_stylometric = keras.layers.Input(shape=(4,),dtype='float32')
 
   use_layer = hub.KerasLayer('https://tfhub.dev/google/universal-sentence-encoder/4', 
                         trainable=True)(use_inputs)
@@ -183,10 +183,10 @@ def blstm_mcnn_model_with_features(bert_model):
   attention_masks    = keras.layers.Input(shape=(40,),dtype='int32')
   use_inputs         = keras.layers.Input(shape=(), dtype=tf.string)
 
-  input_lexical     = keras.layers.Input(shape=(17,),dtype='int32')
-  input_readability = keras.layers.Input(shape=(16,),dtype='int32')
-  input_sentiments  = keras.layers.Input(shape=(6,),dtype='int32')
-  input_stylometric = keras.layers.Input(shape=(4,),dtype='int32')
+  input_lexical     = keras.layers.Input(shape=(17,),dtype='float32')
+  input_readability = keras.layers.Input(shape=(16,),dtype='float32')
+  input_sentiments  = keras.layers.Input(shape=(6,),dtype='float32')
+  input_stylometric = keras.layers.Input(shape=(4,),dtype='float32')
 
   use_layer = hub.KerasLayer('https://tfhub.dev/google/universal-sentence-encoder/4', 
                         trainable=True)(use_inputs)
@@ -225,10 +225,10 @@ def mcnn_blstm_model_with_features(bert_model):
   attention_masks    = keras.layers.Input(shape=(40,),dtype='int32')
   use_inputs         = keras.layers.Input(shape=(), dtype=tf.string)
 
-  input_lexical     = keras.layers.Input(shape=(17,),dtype='int32')
-  input_readability = keras.layers.Input(shape=(16,),dtype='int32')
-  input_sentiments  = keras.layers.Input(shape=(6,),dtype='int32')
-  input_stylometric = keras.layers.Input(shape=(4,),dtype='int32')
+  input_lexical     = keras.layers.Input(shape=(17,),dtype='float32')
+  input_readability = keras.layers.Input(shape=(16,),dtype='float32')
+  input_sentiments  = keras.layers.Input(shape=(6,),dtype='float32')
+  input_stylometric = keras.layers.Input(shape=(4,),dtype='float32')
 
   use_layer = hub.KerasLayer('https://tfhub.dev/google/universal-sentence-encoder/4', 
                         trainable=True)(use_inputs)
