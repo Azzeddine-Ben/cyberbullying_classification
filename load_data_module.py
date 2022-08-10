@@ -2,7 +2,7 @@
 """
 Created on Wed Sep  8 16:22:20 2021
 
-@author: IT Doctor
+@author: IT Doctor_load_data_module
 """
 
 import pickle
@@ -69,9 +69,9 @@ def load_train_features(dataset_name, eda):
     X_train_lexical = pickle.load(pickle_in)
     pickle_in.close()
     
-    pickle_in = open(path + dataset_name + '_features/train/X_train_liwc', 'rb')
-    X_train_liwc = pickle.load(pickle_in)
-    pickle_in.close()    
+    # pickle_in = open(path + dataset_name + '_features/train/X_train_liwc', 'rb')
+    # X_train_liwc = pickle.load(pickle_in)
+    # pickle_in.close()    
 
     pickle_in = open(path + dataset_name + '_features/train/X_train_sentiments', 'rb')
     X_train_sentiments= pickle.load(pickle_in)
@@ -81,7 +81,8 @@ def load_train_features(dataset_name, eda):
     y_train = pickle.load(pickle_in)
     pickle_in.close()
     
-    return X_train, X_train_stylometric, X_train_readability, X_train_lexical, X_train_liwc, X_train_sentiments, y_train
+    # return X_train, X_train_stylometric, X_train_readability, X_train_lexical, X_train_liwc, X_train_sentiments, y_train
+    return X_train, X_train_stylometric, X_train_readability, X_train_lexical, '', X_train_sentiments, y_train
     
 def load_valid_features(dataset_name, eda): 
     if eda == 'y':
@@ -103,9 +104,9 @@ def load_valid_features(dataset_name, eda):
     X_valid_lexical = pickle.load(pickle_in)
     pickle_in.close()
     
-    pickle_in = open(path + dataset_name + '_features/valid/X_valid_liwc', 'rb')
-    X_valid_liwc = pickle.load(pickle_in)
-    pickle_in.close()
+    # pickle_in = open(path + dataset_name + '_features/valid/X_valid_liwc', 'rb')
+    # X_valid_liwc = pickle.load(pickle_in)
+    # pickle_in.close()
     
     pickle_in = open(path + dataset_name + '_features/valid/X_valid_sentiments', 'rb')
     X_valid_sentiments = pickle.load(pickle_in)
@@ -115,7 +116,8 @@ def load_valid_features(dataset_name, eda):
     y_valid = pickle.load(pickle_in)
     pickle_in.close()
     
-    return X_valid, X_valid_stylometric, X_valid_readability, X_valid_lexical, X_valid_liwc, X_valid_sentiments, y_valid 
+    # return X_valid, X_valid_stylometric, X_valid_readability, X_valid_lexical, X_valid_liwc, X_valid_sentiments, y_valid 
+    return X_valid, X_valid_stylometric, X_valid_readability, X_valid_lexical, '', X_valid_sentiments, y_valid 
     
 def load_test_features(dataset_name, eda):
     if eda == 'y':
@@ -144,9 +146,9 @@ def load_test_features(dataset_name, eda):
     X_test_lexical = pickle.load(pickle_in)
     pickle_in.close()
     
-    pickle_in = open(path + dataset_name + '_features/test/X_test_liwc', 'rb')
-    X_test_liwc = pickle.load(pickle_in)
-    pickle_in.close()
+    # pickle_in = open(path + dataset_name + '_features/test/X_test_liwc', 'rb')
+    # X_test_liwc = pickle.load(pickle_in)
+    # pickle_in.close()
     
     pickle_in = open(path + dataset_name + '_features/test/X_test_sentiments', 'rb')
     X_test_sentiments = pickle.load(pickle_in)
@@ -158,7 +160,9 @@ def load_test_features(dataset_name, eda):
 #     pickle_in.close()
 # =============================================================================
     
-    return X_test, X_test_stylometric, X_test_readability, X_test_lexical, X_test_liwc, X_test_sentiments, y_test     
+    # return X_test, X_test_stylometric, X_test_readability, X_test_lexical, X_test_liwc, X_test_sentiments, y_test   
+    return X_test, X_test_stylometric, X_test_readability, X_test_lexical, '', X_test_sentiments, y_test     
+  
     
 
 def load_use_embeddings(dataset_name):
@@ -171,21 +175,3 @@ def load_use_embeddings(dataset_name):
     pickle_in.close()
     
     return X_train_use, X_test_use
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    

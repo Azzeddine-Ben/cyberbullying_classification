@@ -2,7 +2,7 @@
 """
 Created on Sat Jul 23 14:53:41 2022
 
-@author: IT Doctor
+@author: IT Doctor_cb_classification_features
 """
 
 
@@ -134,9 +134,9 @@ if __name__ == '__main__':
     X_test_lexical = lexical_scaler.transform(X_test_lexical)
     X_valid_lexical = lexical_scaler.transform(X_valid_lexical)
 
-    liwc_scaler, X_train_liwc =  FeaturesScaling(X_train_liwc)
-    X_test_liwc = liwc_scaler.transform(X_test_liwc)
-    X_valid_liwc = liwc_scaler.transform(X_valid_liwc)
+    # liwc_scaler, X_train_liwc =  FeaturesScaling(X_train_liwc)
+    # X_test_liwc = liwc_scaler.transform(X_test_liwc)
+    # X_valid_liwc = liwc_scaler.transform(X_valid_liwc)
 
     sentiments_scaler, X_train_sentiments =  FeaturesScaling(X_train_sentiments)
     X_test_sentiments = sentiments_scaler.transform(X_test_sentiments)
@@ -151,7 +151,7 @@ if __name__ == '__main__':
     X_test_ids, X_test_masks   = hf_model_encode(X_test, MAX_LEN, tokenizer)
     
     #### Added clf models along with input features
-    if clf_model == 'mcnn_with_feature':
+    if clf_model == 'mcnn_with_features':
         model = clf_models.mcnn_model_with_features(hf_model)
     elif clf_model == 'blstm_mcnn_with_features':
         model = clf_models.blstm_mcnn_model_with_features(hf_model)
@@ -178,7 +178,7 @@ if __name__ == '__main__':
         chkp_path = './' + dataset_name + '_' + nlp_model + '_' + clf_model + '_cw.h5'
         mchkp = keras.callbacks.ModelCheckpoint(chkp_path, monitor='val_loss', verbose=1, save_best_only=True, save_weights_only = True)
         model.compile(keras.optimizers.Adam(lr=6e-6), loss='binary_crossentropy', metrics=['accuracy'])
-        cw = class_weight.compute_class_weight('balanced',  [0, 1], y_train)
+        cw = class_weight.compute_class_weight(class_weight = 'balanced',  classes = [0, 1], y = y_train)
         cw_dict = {0: cw[0], 1: cw[1]}
         
         history = model.fit(
